@@ -63,10 +63,10 @@ class Coalesce : public Element { public:
 
     Packet *_p;
     Packet *_p2;
-    Timestamp _delay;
+    uint32_t _mss;
     Task _task;
     Timer _timer;
-    uint32_t _mss;
+    Timestamp _delay;
     NotifierSignal _signal;
 
 };

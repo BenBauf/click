@@ -149,7 +149,7 @@ bool RemoveTCPOptionElement::shouldBeInspected(Packet*p_in, WritablePacket **p_o
 	return false;
 }
 
-void RemoveTCPOptionElement::push(int port, Packet *p_in) {
+void RemoveTCPOptionElement::push(int, Packet *p_in) {
 	WritablePacket *p = 0;
 	if(shouldBeInspected(p_in,&p)){
 		const click_tcp *tcph = p->tcp_header();
@@ -252,7 +252,7 @@ bool RemoveTCPOptionElement::updateFlow(IPAddress sAddr, uint16_t sPort, IPAddre
 	return found->_packetCount >= _delayRM;
 }
 
-void RemoveTCPOptionElement::rmFlow(Timer * t, void *data){
+void RemoveTCPOptionElement::rmFlow(Timer * /*t*/, void *data){
 	TimerData *td = (TimerData*) data;
 	FlowIDrm *frm = (td->me)->_map.erase(td->flowid);
 	if(frm!=NULL){

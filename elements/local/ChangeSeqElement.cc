@@ -39,7 +39,7 @@ int ChangeSeqElement::configure(Vector<String> &conf, ErrorHandler *errh){
 	return 0;
 }
 
-int ChangeSeqElement::getDelta(Packet *p_in){
+int ChangeSeqElement::getDelta(Packet* /*p_in*/){
 	if(_delta != 0)
 		return _reverse ? 0 - _delta : _delta;
 	else{
@@ -66,7 +66,7 @@ void ChangeSeqElement::updateSeq(WritablePacket *wp, int delta){
 		tcph->th_seq = htonl(ntohl(tcph->th_seq) + delta);
 }
 
-void ChangeSeqElement::push(int port, Packet *p_in) {
+void ChangeSeqElement::push(int, Packet *p_in) {
 	WritablePacket *wp = 0;
 	if(shouldBeInspected(p_in, &wp)){
 		int delta = getDelta(wp);

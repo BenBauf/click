@@ -73,7 +73,7 @@ void ChangeMSSElement::updateMSS(WritablePacket *wp, int at){
 		*((uint16_t*) (((uint8_t *)(tcph+1)) + at + 2)) = htons(mss + delta);
 }
 
-void ChangeMSSElement::push(int port, Packet *p_in) {
+void ChangeMSSElement::push(int, Packet *p_in) {
 	WritablePacket *wp = 0;
 	int at;
 	if(shouldBeInspected(p_in, &wp, &at)){

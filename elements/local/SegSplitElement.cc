@@ -109,7 +109,7 @@ void SegSplitElement::removeTCPOptions(WritablePacket *p){
 		*(opt+j) = TCPOPT_NOP;
 }
 
-void SegSplitElement::push(int port, Packet *p_in) {
+void SegSplitElement::push(int, Packet *p_in) {
 	int at;
 	WritablePacket *p1,*p2;
 	if(mustBeSplit(p_in, &at)){

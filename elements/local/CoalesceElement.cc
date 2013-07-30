@@ -77,7 +77,6 @@ Coalesce::run_task(Task *)
 	if (_p->timestamp_anno() <= now) {
 	    // packet ready for output
 		// TODO may be changed to do a reverse lookup in the previous queue element
-		// IDEA use yank1 on casted input(0) simple queue
 		_p2 = input(0).pull();
 		if(mustBeCoalesced()){
 			//actual coalescing
@@ -142,7 +141,7 @@ bool Coalesce::areFromSameFlow(){
 bool Coalesce::containSmallData(){
 	int lentcp  = ntohs((_p)->ip_header()->ip_len)  - 4*((_p)->ip_header()->ip_hl)  - 4*(_p->tcp_header()->th_off);
 	int lentcp2 = ntohs((_p2)->ip_header()->ip_len) - 4*((_p2)->ip_header()->ip_hl) - 4*(_p2->tcp_header()->th_off);
-	return lentcp > 0 && lentcp2 > 0 && lentcp + lentcp2 <= _mss;
+	return lentcp > 0 && lentcp2 > 0 && lentcp + lentcp2 <= (int)_mss;
 }
 bool Coalesce::follows(){
 	int lentcp  = ntohs((_p)->ip_header()->ip_len)  - 4*((_p)->ip_header()->ip_hl)  - 4*(_p->tcp_header()->th_off);

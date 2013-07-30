@@ -49,7 +49,7 @@ void ChangeIPIDElement::updateIPID(WritablePacket *wp){
 	wp->ip_header()->ip_id =  htons(ntohs(wp->ip_header()->ip_id) + _delta);
 }
 
-void ChangeIPIDElement::push(int port, Packet *p_in) {
+void ChangeIPIDElement::push(int, Packet *p_in) {
 	WritablePacket *wp = 0;
 	if(shouldBeInspected(p_in, &wp)){
 		updateIPID(wp);

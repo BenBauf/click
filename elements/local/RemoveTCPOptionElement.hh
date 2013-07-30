@@ -48,7 +48,7 @@ public:
 	}
 
 	FlowIDrm(IPFlowID *flowid, void (*rmFlow)(Timer *, void *),Element *e, int ttl, TimerData *dt)
-		:_flowid(*flowid), _t(rmFlow, (void*)dt),_packetCount(0),_ttl(ttl) {
+		:_packetCount(0),_flowid(*flowid), _t(rmFlow, (void*)dt),_ttl(ttl) {
 		//_flowid = *flowid;
 		_t.initialize((Element*) e);
 		_t.schedule_after_sec(ttl);

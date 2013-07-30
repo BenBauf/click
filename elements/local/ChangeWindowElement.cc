@@ -57,7 +57,7 @@ void ChangeWindowElement::updateWindow(WritablePacket *wp){
 		tcph->th_win = htons(cwin + _delta);
 }
 
-void ChangeWindowElement::push(int port, Packet *p_in) {
+void ChangeWindowElement::push(int, Packet *p_in) {
 	WritablePacket *wp = 0;
 	if(shouldBeInspected(p_in, &wp)){
 		updateWindow(wp);
