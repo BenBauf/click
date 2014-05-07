@@ -7,7 +7,7 @@ bin
 click-buildtool
 click-compile
 config.cache
-config.h
+config-default.h
 config.log
 config.mk
 config.status
