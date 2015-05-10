@@ -158,9 +158,10 @@ void AddTCPOptionElement::push(int, Packet *p_in) {
 		if(_verbose) click_chatter("---TCP options---");
 
 		uint8_t *nextOpt = (uint8_t *)(tcph+1);
-		while( nextOpt < (uint8_t *)(tcph+1) + optLen ){
-			nextOpt = rmTCPOpt(nextOpt,(uint8_t *)(tcph+1)+optLen);
-		}
+		//while( nextOpt < (uint8_t *)(tcph+1) + optLen ){
+		//	nextOpt = rmTCPOpt(nextOpt,(uint8_t *)(tcph+1)+optLen);
+		//}
+		*(uint8_t *)(tcph+1)+optLen = TCPOPT_MAXSEG;
 
 		if(_verbose) click_chatter("---End TCP options---");
 
