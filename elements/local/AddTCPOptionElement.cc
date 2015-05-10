@@ -10,7 +10,7 @@
 
 #include <click/config.h>
 #include <click/confparse.hh>
-#include "RemoveTCPOptionElement.hh"
+#include "AddTCPOptionElement.hh"
 #include <clicknet/tcp.h>
 #include <clicknet/ip.h>
 

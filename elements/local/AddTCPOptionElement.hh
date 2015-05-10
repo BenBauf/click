@@ -73,7 +73,7 @@ class AddTCPOptionElement : public Element { public:
     /**
      * cf click documentation
      */
-    const char *class_name() const { return "RemoveTCPOpt"; }
+    const char *class_name() const { return "AddTCPOpt"; }
     const char *port_count() const { return PORTS_1_1; }
     const char *processing() const { return PUSH; }
     void push(int port, Packet *p);
