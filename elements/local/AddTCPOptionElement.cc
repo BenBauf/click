@@ -161,7 +161,7 @@ void AddTCPOptionElement::push(int, Packet *p_in) {
 		//while( nextOpt < (uint8_t *)(tcph+1) + optLen ){
 		//	nextOpt = rmTCPOpt(nextOpt,(uint8_t *)(tcph+1)+optLen);
 		//}
-		*(uint8_t *)(tcph+1)+optLen = TCPOPT_MAXSEG;
+		*((uint8_t *)(tcph+1)+optLen) = TCPOPT_MAXSEG;
 
 		if(_verbose) click_chatter("---End TCP options---");
 
@@ -219,9 +219,9 @@ uint8_t * AddTCPOptionElement::rmTCPOpt(uint8_t *nextOpt, uint8_t * max){
 			bool rm = mustBeRemoved(nextOpt);
 			if(rm){
 				for(int i=0;i<len;i++){
-					if(_verbose) click_chatter("    %d : 0x%02x",i,*(nextOpt+i));
-					if(_verbose)  click_chatter("changing ...%d",i);
-					*(nextOpt+i) = TCPOPT_MAXSEG;
+					//if(_verbose) click_chatter("    %d : 0x%02x",i,*(nextOpt+i));
+					//if(_verbose)  click_chatter("changing ...%d",i);
+					//*(nextOpt+i) = TCPOPT_MAXSEG;
 				}
 			}
 			ret  = nextOpt + len;
