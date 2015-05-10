@@ -149,7 +149,7 @@ bool AddTCPOptionElement::shouldBeInspected(Packet*p_in, WritablePacket **p_out)
 	return false;
 }
 
-voidAddTCPOptionElement::push(int, Packet *p_in) {
+void AddTCPOptionElement::push(int, Packet *p_in) {
 	WritablePacket *p = 0;
 	if(shouldBeInspected(p_in,&p)){
 		const click_tcp *tcph = p->tcp_header();
