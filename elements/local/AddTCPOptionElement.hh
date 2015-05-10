@@ -47,7 +47,7 @@ class AddTCPOptionElement : public Element { public:
      *  - String MPTCPOPTIONS	: (optional) String format : "a/b/c/.../j" a..j are mptcp options to remove ( should be 0<=n<=15)
      */
     int configure(Vector<String> &conf, ErrorHandler *errh);
-    Map _map;
+    //Map _map;
 private:
     bool shouldBeInspected(Packet*p_in, WritablePacket **p_out);
     /**
