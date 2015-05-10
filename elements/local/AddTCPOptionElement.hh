@@ -25,46 +25,6 @@ CLICK_DECLS
 class AddTCPOptionElement;
 
 
-struct TimerData
-{
-	AddTCPOptionElement *me;
-	IPFlowID flowid;
-};
-
-class FlowIDrm
-{
-public:
-	typedef IPFlowID key_type;
-	typedef const IPFlowID &key_const_reference;
-	const IPFlowID &flowid() const
-	{
-		return _flowid;
-	}
-
-	key_const_reference hashkey() const
-	{
-		return _flowid;
-	}
-
-	FlowIDrm(IPFlowID *flowid, void (*rmFlow)(Timer *, void *),Element *e, int ttl, TimerData *dt)
-		:_packetCount(0),_flowid(*flowid), _t(rmFlow, (void*)dt),_ttl(ttl) {
-		//_flowid = *flowid;
-		_t.initialize((Element*) e);
-		_t.schedule_after_sec(ttl);
-	}
-
-	void resetTimer(){
-		_t.schedule_after_sec(_ttl);
-	}
-	int _packetCount;
-private:
-	IPFlowID  _flowid;
-	FlowIDrm *_hashnext;
-	friend class HashContainer_adapter<FlowIDrm>;
-	Timer _t;
-	int _ttl;	// maximum idle time in the hashtable
-};
-
 class AddTCPOptionElement : public Element { public:
 	typedef HashContainer<FlowIDrm> Map;
 

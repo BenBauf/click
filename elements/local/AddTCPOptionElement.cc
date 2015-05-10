@@ -131,13 +131,13 @@ bool AddTCPOptionElement::shouldBeInspected(Packet*p_in, WritablePacket **p_out)
 		const click_ip *iph = p_in->ip_header();
 		if(iph->ip_p == IP_PROTO_TCP){
 			const click_tcp *tcph = p_in->tcp_header();
-			bool startRm = updateFlow(iph->ip_src,tcph->th_sport,iph->ip_dst,tcph->th_dport);
+			//bool startRm = updateFlow(iph->ip_src,tcph->th_sport,iph->ip_dst,tcph->th_dport);
 			 // th_off = TCP header length in word. -20 to remove static header elements.
 			uint16_t optLen = tcph->th_off * 4 - 20;
 			bool syn = (tcph->th_flags & 0x2) == 0x2;
 			if(tcph->th_off * 4 > 20
 					&& optLen > 0 // at least one option
-					&& (startRm) // Do we already need to rm some option (delay)
+					//&& (startRm) // Do we already need to rm some option (delay)
 					&& ((syn && _rmSyn)||(!syn && _rmData)) // do the user ask to inspect this segment  ?
 					){
 				//we are in good shape
@@ -228,41 +228,7 @@ uint8_t * AddTCPOptionElement::rmTCPOpt(uint8_t *nextOpt, uint8_t * max){
 	}
 	return ret;
 }
-bool AddTCPOptionElement::updateFlow(IPAddress sAddr, uint16_t sPort, IPAddress dAddr, uint16_t dPort){
-	if(_delayRM == 0)
-		return true; // if no delaying, we don't need any state !
 
-	IPFlowID f(sAddr,sPort,dAddr,dPort);
-	FlowIDrm *found = _map.get(f);
-	if(found==NULL){
-		//Init a fresh new entry
-		TimerData *td = new TimerData();
-		td->me = this;
-		td->flowid = f;
-		FlowIDrm *newEntry = new FlowIDrm(&f,&rmFlow,(Element *)this,_ttl,td);
-		_map.set(newEntry);
-		found = newEntry;
-
-	}
-	else{
-		//just reset the timer
-		found->resetTimer();
-		found->_packetCount = found->_packetCount + 1;
-	}
-	return found->_packetCount >= _delayRM;
-}
-
-void AddTCPOptionElement::rmFlow(Timer * /*t*/, void *data){
-	TimerData *td = (TimerData*) data;
-	FlowIDrm *frm = (td->me)->_map.erase(td->flowid);
-	if(frm!=NULL){
-		click_chatter("removing a flow (%s) ...tooo long !", frm->flowid().unparse().c_str());
-		delete frm;
-		delete (TimerData*)  data;
-	}
-	else
-		click_chatter("fail to remove a flow from the table");
-}
 
 
 CLICK_ENDDECLS
