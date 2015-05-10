@@ -26,7 +26,7 @@ class AddTCPOptionElement;
 
 
 class AddTCPOptionElement : public Element { public:
-	typedef HashContainer<FlowIDrm> Map;
+	//typedef HashContainer<FlowIDrm> Map;
 
     ~AddTCPOptionElement();
     AddTCPOptionElement();
@@ -47,10 +47,8 @@ class AddTCPOptionElement : public Element { public:
      *  - String MPTCPOPTIONS	: (optional) String format : "a/b/c/.../j" a..j are mptcp options to remove ( should be 0<=n<=15)
      */
     int configure(Vector<String> &conf, ErrorHandler *errh);
-    static void rmFlow(Timer * t, void *data);
     Map _map;
 private:
-    bool updateFlow(IPAddress sAddr, uint16_t sPort, IPAddress dAddr, uint16_t dPort);
     bool shouldBeInspected(Packet*p_in, WritablePacket **p_out);
     /**
      * Check if the option located at nextOpt must be removed. If it must be removed then the whole option is changed by NOP TCP option.
